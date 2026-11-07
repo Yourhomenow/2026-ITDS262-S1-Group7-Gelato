@@ -1,0 +1,12 @@
+node_modules
+.next
+dist
+build
+out
+coverage
+bun.lock
+*.tsbuildinfo
+docs
+database
+**/AGENTS.md
+**/CLAUDE.md

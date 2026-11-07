@@ -15,7 +15,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 2 | Data model | Foundation | existing |
 | 3 | API foundation | Foundation | done |
 | 4 | Database access layer | Foundation | planned |
-| 5 | Coding standards and tooling | Foundation | in-progress |
+| 5 | Coding standards and tooling | Foundation | done |
 | 6 | App shell and design foundation | Foundation | planned |
 | 7 | Account registration | Slice 1 | planned |
 | 8 | Sign in with password and OTP | Slice 1 | planned |
@@ -63,9 +63,9 @@ How the API talks to Postgres: the client, how queries are written, how migratio
 ### 5. Coding standards and tooling
 Capture the conventions actually in use, then install the checks that keep a small team honest: a test runner, lint and format, and a typecheck that runs on every change.
 **Done when:** root `AGENTS.md` reflects the real stack, and `bun test`, typecheck and lint all run clean from a fresh clone.
-- [ ] Capture conventions and tooling choices: `/audit`
-- [ ] Install the tooling: `/develop tooling`
-- [ ] Check it runs clean: `/test`
+- [x] Capture conventions and tooling choices: `/audit`
+- [x] Install the tooling: `/develop tooling`
+- [x] Check it runs clean: `/test`
 
 ### 6. App shell and design foundation · needs a decision
 The frame every screen sits in: sign in wall, role aware navigation for staff and manager, page layout, tables, forms, and the visual language for a food product. Deciding it once stops each later screen inventing its own.

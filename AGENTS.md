@@ -1,6 +1,50 @@
 # This is a Full-stack Gelato store and management projects
 
-directory server is backend which is express, and in clients directory It's frontend which is Next.js and we will use PostgreSql as a database
+`server` is the backend (Bun and TypeScript), `clients` is the frontend (Next.js), and PostgreSQL is the database.
+
+## Stack
+
+- **Language / runtime**: TypeScript on Bun 1.4
+- **Backend**: `Bun.serve` with Hono routes, Zod validation and one shared HTTP seam in `server/src/http/`
+- **Frontend**: Next.js 16 (App Router, React 19) with Tailwind CSS 4
+- **Database**: PostgreSQL 13 or newer; schema in `database/schema.sql`
+- **Package manager**: Bun
+- **Money and quantities**: money is `numeric(12,2)` and leaves the API as a string; quantities are `numeric(12,3)` (see D10 in `database/README.md`)
+
+## Build approach
+
+**Tracer Bullet**: every feature ships end to end through the database, the API and the screen, so a slice that slips never breaks the demo.
+
+## Commands
+
+```bash
+# Install (once per package)
+bun install
+bun install --cwd=server
+bun install --cwd=clients
+
+# Dev servers
+bun run dev:server
+bun run dev:clients
+
+# From the repo root
+bun test
+bun run typecheck
+bun run lint
+bun run format
+bun run format:check
+
+# Database (rebuilds from scratch; drops and refills data)
+psql "$DATABASE_URL" -f database/schema.sql
+psql "$DATABASE_URL" -f database/seed.sql
+```
+
+## Rules
+
+- Use the domain vocabulary in `docs/agents/domain.md`. A `menu item` is never a product, a `member` is a registered account, and `stock` (ingredient lots) is not `availability` (servings a branch will sell today).
+- Server modules use ES modules and `.js` import extensions, because `server/tsconfig.json` uses `NodeNext`.
+- Daily boundaries use the shop timezone `Asia/Ho_Chi_Minh`, never the server clock (D15).
+- Treat the schema decisions D1 to D15 in `database/README.md` as the closest thing to ADRs. Surface a conflict instead of quietly diverging.
 
 
 1. **User Management & Authentication**
