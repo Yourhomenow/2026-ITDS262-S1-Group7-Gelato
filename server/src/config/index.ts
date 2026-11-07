@@ -11,6 +11,13 @@ export interface DbConfig {
 export interface Config {
   port: number;
   env: string;
+
+  // Browser origin allowed by credentialed CORS.
+  clientsOrigin: string;
+
+  // Session cookie name, set by the sign in feature.
+  sessionCookieName: string;
+
   database: DbConfig;
 }
 
@@ -18,6 +25,10 @@ export const config: Config = {
   // Server
   port: parseInt(process.env.PORT ?? "", 10) || 3005,
   env: process.env.NODE_ENV || "development",
+
+  // HTTP seam
+  clientsOrigin: process.env.CLIENTS_ORIGIN || "http://localhost:3000",
+  sessionCookieName: process.env.SESSION_COOKIE_NAME || "gelato_session",
 
   // Database
   database: {

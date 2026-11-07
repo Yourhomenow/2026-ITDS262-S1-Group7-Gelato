@@ -13,9 +13,9 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 |---|---------|-------|--------|
 | 1 | Stack scaffold | Foundation | existing |
 | 2 | Data model | Foundation | existing |
-| 3 | API foundation | Foundation | planned |
+| 3 | API foundation | Foundation | done |
 | 4 | Database access layer | Foundation | planned |
-| 5 | Coding standards and tooling | Foundation | planned |
+| 5 | Coding standards and tooling | Foundation | in-progress |
 | 6 | App shell and design foundation | Foundation | planned |
 | 7 | Account registration | Slice 1 | planned |
 | 8 | Sign in with password and OTP | Slice 1 | planned |
@@ -42,10 +42,18 @@ Bun and TypeScript backend with a Next 16 frontend, both booting and typecheckin
 ### 2. Data model · existing
 25 table Postgres schema with the constraints that encode the brief, a demo seed, and the decisions behind both. Covers requirement 1.6: every account and every stock record carries a unique identifier that supports direct lookup. code in `database/`
 
-### 3. API foundation · needs a decision
-The seam every feature hangs off: how routes take path parameters, how request bodies are validated, what an error looks like, and where the auth check sits. Today the router is a flat path lookup with no parameters and no validation, so this decision is blocking before any endpoint can be trusted.
+### 3. API foundation · done
+The seam every feature hangs off: how routes take path parameters, how request bodies are validated, what an error looks like, and where the auth check sits. Today the router is a flat path lookup with no parameters and no validation, so this decision is blocking before any endpoint can be trusted. code in `server/src/http/`, `server/src/app.ts`
 **Done when:** a route with a path parameter and a validated body returns the documented success and error shapes, and one shared mechanism rejects an unauthenticated request.
-- [ ] Design it (spec): `/architect API foundation`
+- [x] Design it (spec): `/architect API foundation` · [0001](../specs/0001-api-foundation/index.md)
+- [x] Build it: `/develop API foundation`
+  - [x] Retire the placeholder routes, add Hono, Zod and the validator, and add the env keys (AC-1, AC-8, AC-9)
+  - [x] Build the shared HTTP layer: envelopes, error catalog, Zod mapping, unknown key stripping, content type and body limit (AC-2, AC-3, AC-4, AC-7, AC-9, AC-11, AC-12)
+  - [x] Build the session port and middleware: `SessionReader`, `requireStaff`, `requireRole` (AC-5, AC-6)
+  - [x] Build `createApp` with credentialed CORS, `notFound`, `onError`, health and echo, wired in pipeline order (AC-1, AC-8, AC-13)
+  - [x] Replace the tests, run the root gates, and update the scope and `AGENTS.md` (AC-1 to AC-13)
+- [x] Verify it: `/check verify API foundation`
+- [x] Test it: `/test API foundation`
 
 ### 4. Database access layer · needs a decision
 How the API talks to Postgres: the client, how queries are written, how migrations run once the schema starts changing, and how one order placement holds a transaction.
